@@ -1,0 +1,98 @@
+function [xCen,spectrum,wLPhase] = WLI_processData(dataArray,xL)
+    
+    %dataArray = dataArray(1:1024,:);
+    %xL = xL(1:1024);
+    close all;
+    
+    [dataArray, xL] = subtractSignals(dataArray,xL,0.015,100,true);
+    
+    [N,~]=size(dataArray);
+    heneData = dataArray(:,2);
+    
+    xNL = calibrateDelayAxis(heneData(:),xL(:));
+    dataArray = interp1(xNL,dataArray,xL,'pchip',0);
+    
+    c_mm_ps = 0.3;
+    t = 2*xL/c_mm_ps;
+    dw = 2*pi/max(abs(t));
+    wMax = dw*N;
+    w = (-wMax/2:dw:wMax/2-dw)';
+    lambda = (2*pi*c_mm_ps./w)*1000;
+    idx = (lambda>0.2)&(lambda<1.5);
+    lambda = lambda(idx);
+    
+    xCen = calculateZeroDelayCorrection(w,dw,xL,dataArray);
+    
+    field = nfft(dataArray-median(dataArray));
+    spectrum = abs(field).^2;
+    wLPhase = unwrap(angle(field(idx,2)));
+    
+    spectrum = spectrum(idx,:);
+    spectrum(:,1) = smooth(spectrum(:,1),5);
+    spectrum = (spectrum-min(spectrum))./(max(spectrum)-min(spectrum));
+    
+    phaseBlank = spectrum(:,1);
+    phaseBlank = phaseBlank < 0.1;
+    wLPhase(phaseBlank)=nan;
+    wLPhase = removeLinearTerm(w(idx),wLPhase);
+    wLPhase(~isnan(wLPhase)) = smooth(wLPhase(~isnan(wLPhase)),5);
+    
+    
+    figure('color','w');
+    
+    yyaxis left;
+%     plot(lambda, abs(spectrum).^2);
+    plot(lambda, spectrum);
+    axis tight;
+    xl = xlabel('\lambda [\mum]');
+    yl = ylabel('Spectrum [a.u.]');
+    set([xl,yl,gca],'fontSize',18,'fontWeight','bold');
+    
+    yyaxis right;
+    plot(lambda,wLPhase);
+    axis tight;
+    yl = ylabel('Phase [rad]');
+    set([xl,yl,gca],'fontSize',18,'fontWeight','bold');
+    legend({'WL Spectrum','Calibration Spectrum','WL Phase'},'fontsize',8);
+
+end
+
+function [xCen,wlSpec] = calculateZeroDelayCorrection(w,dw,xL,dataArray)
+
+    wlSpec = nfft(dataArray(:,2)-median(dataArray(:,2)));
+    wlSpec(w<0)=0;
+    
+    wCen = sum(w.*abs(wlSpec).^2)/sum(abs(wlSpec).^2);
+    wCenPx = round(wCen/dw);
+    wlSpec = circshift(wlSpec,-wCenPx);
+    wlTemp = smooth(abs(nifft(smooth(wlSpec,5))).^2,5);
+    
+    xCen = sum(xL'.*wlTemp)/sum(wlTemp);
+
+end
+
+function phase = removeLinearTerm(w,phase)
+    
+    idx = ~isnan(phase);
+    nanPhase = phase(idx);
+    nanW = w(idx);
+   
+    p = polyfit(nanW,nanPhase,1);
+    phase = phase - p(1) * w - p(2);
+    
+    
+
+end
+
+
+function b = nfft(a)
+
+    b = ifftshift( fft( fftshift(a) ) );
+
+end
+
+function b = nifft(a)
+
+    b = fftshift( ifft( ifftshift(a) ) );
+
+end
