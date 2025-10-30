@@ -1,0 +1,13 @@
+# List of bad data sets
+-----------------------
+
+## With Glass
+raw_data_015_20251015
+raw_data_021_20251015
+
+## With Glass
+raw_data_006_20251015
+raw_data_009_20251015
+raw_data_014_20251015
+raw_data_018_20251015
+raw_data_021_20251015
