@@ -1,0 +1,59 @@
+# GDD Values
+------------
+
+Wavelengths all around around 1 um +/- 0.4 um = 1000 nm +/1 400 nm 
+Check notebooks to see which wavelengths these were calculated at.
+
+## No Glass
+-----------
+raw_data_001_20251015 - 13.76 fs^2
+raw_data_002_20251015 - 13.84 fs^2
+raw_data_003_20251015 - 12.95 fs^2
+raw_data_004_20251015 - 13.84 fs^2
+raw_data_005_20251015 - 14.32 fs^2
+raw_data_006_20251015 - 13.73 fs^2
+raw_data_007_20251015 - 13.74 fs^2
+raw_data_008_20251015 - 15.57 fs^2
+raw_data_009_20251015 - 15.05 fs^2
+raw_data_010_20251015 - 12.68 fs^2
+raw_data_011_20251015 - 14.41 fs^2
+raw_data_012_20251015 - 16.24 fs^2
+raw_data_013_20251015 - 14.73 fs^2
+raw_data_014_20251015 - 14.03 fs^2
+raw_data_016_20251015 - 16.05 fs^2
+raw_data_017_20251015 - 14.23 fs^2
+raw_data_018_20251015 - 11.36 fs^2
+raw_data_019_20251015 - 14.04 fs^2
+raw_data_020_20251015 - 15.04 fs^2
+raw_data_022_20251015 - 14.34 fs^2
+raw_data_023_20251015 - 10.88 fs^2
+raw_data_024_20251015 - 16.72 fs^2
+raw_data_025_20251015 - 13.77 fs^2
+Average - 11.64 fs^2
+
+## With Glass
+-------------
+raw_data_001_20251015 - 46.91 fs^2
+raw_data_002_20251015 - 42.52 fs^2
+raw_data_003_20251015 - 53.90 fs^2
+raw_data_004_20251015 - 38.77 fs^2
+raw_data_005_20251015 - 44.76 fs^2
+raw_data_007_20251015 - 48.12 fs^2
+raw_data_008_20251015 - 49.56 fs^2
+raw_data_010_20251015 - 48.44 fs^2
+raw_data_011_20251015 - 47.19 fs^2
+raw_data_012_20251015 - 42.13 fs^2
+raw_data_013_20251015 - 44.71 fs^2
+raw_data_015_20251015 - 52.34 fs^2
+raw_data_016_20251015 - 44.64 fs^2
+raw_data_017_20251015 - 46.71 fs^2
+raw_data_019_20251015 - 45.71 fs^2
+raw_data_020_20251015 - 43.50 fs^2
+raw_data_022_20251015 - 46.37 fs^2
+raw_data_023_20251015 - 42.19 fs^2
+raw_data_024_20251015 - 41.46 fs^2
+raw_data_025_20251015 - 49.29 fs^2
+Average - 43.06 fs^2
+
+GDD_sample = 43.06 fs^2 - 11.64 fs^2 = 31.42 fs^2
+This values seems reasonable for ~1 mm piece of optical glass given such a high wavelength. 
